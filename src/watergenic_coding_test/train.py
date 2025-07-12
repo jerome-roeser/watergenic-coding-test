@@ -44,6 +44,8 @@ def train_model(df: pd.DataFrame):
     reg = LinearRegression()
     scaler = MinMaxScaler()
 
+
+
     pipeline = Pipeline([
         ('scaler', scaler),
         ('Linear Regressor', reg)]
@@ -61,7 +63,7 @@ def train_model(df: pd.DataFrame):
 
 def main():
     train_df = load_data(TRAIN_DATA_FILE)
-    train_model(train_df)
+    train_model(train_df.sample(5, replace=True))
 
 
 if __name__ == "__main__":

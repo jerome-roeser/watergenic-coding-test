@@ -4,9 +4,9 @@
 - [X] Creates the task plan
 - [X] setup basic project structure with data, models, src, tests and .github
 folders
-- [ ] create notebook for Exploratory Data Analysis of features to help choose
+- [X] create notebook for Exploratory Data Analysis of features to help choose
 the features and models used for training
-- [ ] create a script that takes 5 data points to train a scikit-learn model
+- [X] create a script that takes 5 data points to train a scikit-learn model
 - [ ] Refactor code for dynamic input
 - [ ] create prediction script
 - [ ] create MLflow logging
