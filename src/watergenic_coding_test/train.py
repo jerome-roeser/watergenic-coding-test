@@ -3,8 +3,10 @@ import pickle
 from pathlib import Path
 
 from sklearn.linear_model import LinearRegression
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.compose import make_column_transformer
+from sklearn.pipeline import make_pipeline
+from sklearn.impute import KNNImputer
+from sklearn.preprocessing import MinMaxScaler
 
 from src.watergenic_coding_test.params import LOCAL_DATA_PATH, LOCAL_MODELS_PATH
 from src.utils.utils import config
@@ -34,25 +36,32 @@ def load_data(file_path: str) -> pd.DataFrame:
 
     print("✅ Data loaded successfully.")
 
-    return pd.read_csv(file_path)
+    df = pd.read_csv(file_path)
+    df.drop_duplicates(inplace=True)
+    return df
 
 
 def train_model(df: pd.DataFrame):
     X_train = df.copy()
     y_train = X_train.pop('target_variable')
 
-    reg = LinearRegression()
-    scaler = MinMaxScaler()
+    num_transformer = make_pipeline(
+        KNNImputer(),
+        MinMaxScaler()
+        )
 
+    num_prepocessor = make_column_transformer(
+        (num_transformer, ["input_variable1", "input_variable2"]),
+        remainder="drop"
+        )
 
-
-    pipeline = Pipeline([
-        ('scaler', scaler),
-        ('Linear Regressor', reg)]
-                        )
+    pipeline = make_pipeline(
+        num_prepocessor,
+        LinearRegression()
+    )
 
     print("Training model...")
-    pipeline.fit(df[['input_variable1']], y_train)
+    pipeline.fit(X_train, y_train)
     print("✅ Model trained successfully.")
 
 
