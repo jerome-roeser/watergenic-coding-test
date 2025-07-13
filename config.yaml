@@ -4,3 +4,7 @@ files:
 folders:
   data: "data/"
   models: "models/"
+mlflow:
+  experiment_name: "watergenic-202502-data"
+  tracking_server: False # if True, make sure tracking server is running
+  uri: "http://localhost:5000"
