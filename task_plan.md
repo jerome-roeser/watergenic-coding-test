@@ -8,8 +8,8 @@ folders
 the features and models used for training
 - [X] create a script that takes 5 data points to train a scikit-learn model
 - [ ] Refactor code for dynamic input
-- [ ] create prediction script
-- [ ] create MLflow logging
+- [X] create prediction script
+- [X] create MLflow logging
 - [ ] Create first unit tests for validating input format
 - [ ] update/check requirements.txt after the code is functional
 - [ ] document the code with docstrings
@@ -20,6 +20,7 @@ the features and models used for training
 
 
 ### Issues
-
+- I cannot test MLFlow tracking server with databricks (or external tracking servers)
 
 ### To Do
+- Implement mlflow feature for [production Databricks/AzureML tracking servers](https://mlflow.org/docs/latest/ml/getting-started/tracking-server-overview/#method-3-use-production-hosted-tracking-server)

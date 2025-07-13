@@ -1,6 +1,7 @@
 import pandas as pd
 import pickle
 from pathlib import Path
+import mlflow
 
 from sklearn.linear_model import LinearRegression
 from sklearn.compose import make_column_transformer
@@ -37,11 +38,34 @@ def load_data(file_path: str) -> pd.DataFrame:
     print("✅ Data loaded successfully.")
 
     df = pd.read_csv(file_path)
+
+    # Basic data cleaning
     df.drop_duplicates(inplace=True)
+    df.dropna(inplace=True)
     return df
 
 
-def train_model(df: pd.DataFrame):
+def train_model(df: pd.DataFrame, mlflow_tracking_server: bool = False) -> float:
+
+    ###### MLflow Setup ######
+    mlflow.set_experiment(config['mlflow']['experiment_name'])
+
+    if mlflow_tracking_server:
+        print("Setting up MLflow tracking server...")
+        print(f"❗ Make sure the MLflow tracking server is running at {config['mlflow']['uri']} ❗")
+        print("You can start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
+        mlflow.set_tracking_uri(config['mlflow']['uri'])
+    else:
+        print("Using local MLflow tracking...")
+        print(f"Start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
+        print(f"🏃 View run indecisive-colt-908 at: http://localhost:5000/#/experiments/259379731814651623/runs/7980eeba19de455c98ae4493c5f8b116")
+        print(f"🧪 View experiment at: http://localhost:5000/#/experiments/259379731814651623")
+
+    # Enable autologging for scikit-learn
+    mlflow.sklearn.autolog()
+
+
+    ###### Model Training Pipeline ######
     X_train = df.copy()
     y_train = X_train.pop('target_variable')
 
@@ -51,7 +75,7 @@ def train_model(df: pd.DataFrame):
         )
 
     num_prepocessor = make_column_transformer(
-        (num_transformer, ["input_variable1", "input_variable2"]),
+        (num_transformer, ["input_variable1"]),
         remainder="drop"
         )
 
@@ -60,19 +84,37 @@ def train_model(df: pd.DataFrame):
         LinearRegression()
     )
 
-    print("Training model...")
-    pipeline.fit(X_train, y_train)
-    print("✅ Model trained successfully.")
+    ###### Training and saving the Model ######
+    with mlflow.start_run():
+        print(f"Training model on {X_train.shape[0]} samples with \
+{X_train.shape[1]} features...")
+        pipeline.fit(X_train, y_train)
+        print("✅ Model trained successfully.")
+        score = pipeline.score(X_train, y_train)
 
 
     print("Saving model...")
-    with open(Path().joinpath(LOCAL_MODELS_PATH, 'model.pkl'), 'wb') as model_file:
+    try:
+        Path(LOCAL_MODELS_PATH).mkdir(parents=False, exist_ok=True)
+    except Exception as e:
+        print(f"❗ Error creating model directory: {e}")
+        raise
+
+    with open(Path().joinpath(LOCAL_MODELS_PATH, 'model_24.pkl'), 'wb') as model_file:
         pickle.dump(pipeline, model_file)
     print("✅ Model saved successfully.")
+    return score
 
 def main():
     train_df = load_data(TRAIN_DATA_FILE)
-    train_model(train_df.sample(5, replace=True))
+    
+    # train the model with a sample of 5 data points
+    train_df = train_df.sample(5, replace=True)
+    train_score = train_model(
+        train_df,
+        mlflow_tracking_server=config['mlflow']['tracking_server']
+        )
+    print(f"Training score: {train_score:.2f}")
 
 
 if __name__ == "__main__":
