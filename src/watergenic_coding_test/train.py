@@ -1,6 +1,8 @@
 import pandas as pd
 import pickle
 from pathlib import Path
+
+import click
 import mlflow
 
 from sklearn.linear_model import LinearRegression
@@ -58,8 +60,7 @@ def train_model(df: pd.DataFrame, mlflow_tracking_server: bool = False) -> float
     else:
         print("Using local MLflow tracking...")
         print(f"Start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
-        print(f"🏃 View run indecisive-colt-908 at: http://localhost:5000/#/experiments/259379731814651623/runs/7980eeba19de455c98ae4493c5f8b116")
-        print(f"🧪 View experiment at: http://localhost:5000/#/experiments/259379731814651623")
+        print(f"🏃 View runs and 🧪 experiments at: {config['mlflow']['uri']}")
 
     # Enable autologging for scikit-learn
     mlflow.sklearn.autolog()
@@ -105,6 +106,9 @@ def train_model(df: pd.DataFrame, mlflow_tracking_server: bool = False) -> float
     print("✅ Model saved successfully.")
     return score
 
+
+@click.command()
+@click.option('--input_data', type=click.Path(exists=True), default=TRAIN_DATA_FILE, help='Path to the input data file (CSV or JSON).')
 def main():
     train_df = load_data(TRAIN_DATA_FILE)
 

@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Union, List
 import json
 
+import click
 import pandas as pd
 
 from src.watergenic_coding_test.train import train_model
@@ -22,12 +23,12 @@ TRAIN_DATA_FILE = Path(LOCAL_DATA_PATH).joinpath(config['files']['train'])
 
 def load_data(file_path: Path) -> pd.DataFrame:
     """
-    Load data from a CSV file.
+    Load data from a CSV or JSON file.
 
     Parameters
     ----------
-    file_path : str
-        Path to the CSV file.
+    file_path : Path
+        Path to the CSV/JSON file.
 
     Returns
     -------
@@ -51,7 +52,9 @@ def load_data(file_path: Path) -> pd.DataFrame:
     df.dropna(inplace=True)
     return df
 
-
+@click.command()
+@click.option('--input_data', type=click.Path(exists=True), default=TRAIN_DATA_FILE, help='Path to the input data file (CSV or JSON).')
+@click.option('--n_data_points', type=int, default=5, help='Number of data points to sample for training.')
 def main(
     input_data: Union[Path, List[List]] = TRAIN_DATA_FILE,
     n_data_points: int = 5
@@ -92,4 +95,4 @@ def main(
 
 if __name__ == "__main__":
     n_data_points = config['n_data_points']
-    main(n_data_points)
+    main(n_data_points=n_data_points)
