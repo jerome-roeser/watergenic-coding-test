@@ -53,8 +53,8 @@ def load_data(file_path: Path) -> pd.DataFrame:
     return df
 
 @click.command()
-@click.option('--input_data', type=click.Path(exists=True), default=TRAIN_DATA_FILE, help='Path to the input data file (CSV or JSON).')
-@click.option('--n_data_points', type=int, default=5, help='Number of data points to sample for training.')
+@click.option('--input_data', '-i', type=click.Path(exists=True), default=TRAIN_DATA_FILE, help='Path to the input data file (CSV or JSON).')
+@click.option('--n_data_points', '-n', type=int, default=5, help='Number of data points to sample for training.')
 def main(
     input_data: Union[Path, List[List]] = TRAIN_DATA_FILE,
     n_data_points: int = 5

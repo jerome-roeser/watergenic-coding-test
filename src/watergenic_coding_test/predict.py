@@ -1,5 +1,6 @@
 from pickle import load
 import pandas as pd
+import click
 
 
 from pathlib import Path
@@ -42,6 +43,8 @@ def predict(df):
 
     return y_pred
 
+@click.command()
+@click.option('--input_data', '-i', type=click.Path(exists=True), default=PREDICT_DATA_FILE, help='Path to the input data file (CSV or JSON).')
 def main():
     pred_df = load_data(PREDICT_DATA_FILE)
     y_pred = predict(pred_df)
