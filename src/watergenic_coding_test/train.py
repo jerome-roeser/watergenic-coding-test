@@ -17,13 +17,13 @@ from src.utils.utils import config
 TRAIN_DATA_FILE = Path(LOCAL_DATA_PATH).joinpath(config['files']['train'])
 
 
-def load_data(file_path: str) -> pd.DataFrame:
+def load_data(file_path: Path) -> pd.DataFrame:
     """
     Load data from a CSV file.
 
     Parameters
     ----------
-    file_path : str
+    file_path : Path
         Path to the CSV file.
 
     Returns
@@ -107,7 +107,7 @@ def train_model(df: pd.DataFrame, mlflow_tracking_server: bool = False) -> float
 
 def main():
     train_df = load_data(TRAIN_DATA_FILE)
-    
+
     # train the model with a sample of 5 data points
     train_df = train_df.sample(5, replace=True)
     train_score = train_model(
