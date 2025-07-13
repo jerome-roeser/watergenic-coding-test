@@ -108,7 +108,7 @@ def train_model(df: pd.DataFrame, mlflow_tracking_server: bool = False) -> float
 
 
 @click.command()
-@click.option('--input_data', type=click.Path(exists=True), default=TRAIN_DATA_FILE, help='Path to the input data file (CSV or JSON).')
+@click.option('--input_data', '-i', type=click.Path(exists=True), default=TRAIN_DATA_FILE, help='Path to the input data file (CSV or JSON).')
 def main():
     train_df = load_data(TRAIN_DATA_FILE)
 

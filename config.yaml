@@ -1,6 +1,6 @@
 files:
   train: "202502_data_train.csv"
-  test: "202302_data_test.csv"
+  test: "202302_data_test.csv" 
 folders:
   data: "data/"
   models: "models/"
