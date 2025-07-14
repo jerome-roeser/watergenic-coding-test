@@ -13,8 +13,8 @@ the features and models used for training
 - [ ] Create first unit tests for validating input format
 - [ ] update/check requirements.txt after the code is functional
 - [ ] document the code with docstrings
-- [ ] create installation guide
-- [ ] create usage guide
+- [X] create installation guide
+- [X] create usage guide
 - [ ] create function reference
 - [ ] create AI report if necessary
 
