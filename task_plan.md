@@ -10,9 +10,9 @@ the features and models used for training
 - [X] Refactor code for dynamic input
 - [X] create prediction script
 - [X] create MLflow logging
-- [ ] Create first unit tests for validating input format
-- [ ] update/check requirements.txt after the code is functional
-- [ ] document the code with docstrings
+- [X] Create first unit tests for validating input format
+- [X] update/check requirements.txt after the code is functional
+- [X] document the code with docstrings
 - [X] create installation guide
 - [X] create usage guide
 - [ ] create function reference
