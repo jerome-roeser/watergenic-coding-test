@@ -49,3 +49,6 @@ class TestPredictValues(unittest.TestCase):
         })
         with self.assertRaises(ValueError):
             predict(invalid_df, mlflow_tracking_server=False)
+
+    def test_raise_error_when_model_is_None(self):
+        pass

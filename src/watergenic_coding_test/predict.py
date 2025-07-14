@@ -65,10 +65,18 @@ def predict(df, mlflow_tracking_server: bool = False) -> Union[pd.Series, float]
         print(f"Start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
         print(f"🏃 View runs and 🧪 experiments at: {MLFLOW_URI}")
 
+    # Get the model and check if it exists
     with open(Path(LOCAL_MODELS_PATH).joinpath('model.pkl'), 'rb') as model_file:
         pipeline = load(model_file)
+
+    try:
+        assert pipeline is not None, "Model pipeline is None. Please check the model file."
+    except AssertionError as e:
+        raise ValueError("Model pipeline is None. Please check the model file.")
+
     y_pred = pipeline.predict(df)
 
+    # If the target variable is present, we return the R2 and MAPE scores and log them to MLflow
     if 'target_variable' in df.columns:
        with mlflow.start_run():
         params = {
