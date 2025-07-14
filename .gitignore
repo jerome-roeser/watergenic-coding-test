@@ -2,6 +2,7 @@ data/*.pdf
 models/*.pkl
 mlruns/
 notebooks/sandbox.ipynb
+sandbox.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

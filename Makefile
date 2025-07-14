@@ -6,3 +6,9 @@ train_dynamic:
 
 predict:
 	@python src/watergenic_coding_test/predict.py
+
+
+########## Testing ##########
+
+pytest:
+	PYTHONDONTWRITEBYTECODE=1 pytest -v --color=yes
