@@ -113,11 +113,8 @@ def train_model(
 
 
     print("Saving model...")
-    try:
+    if not Path(LOCAL_MODELS_PATH).exists():
         Path(LOCAL_MODELS_PATH).mkdir(parents=False, exist_ok=True)
-    except Exception as e:
-        print(f"❗ Error creating model directory: {e}")
-        raise
 
     with open(Path().joinpath(LOCAL_MODELS_PATH, 'model.pkl'), 'wb') as model_file:
         pickle.dump(pipeline, model_file)
