@@ -1,0 +1,17 @@
+(watergenic-coding-test-py3.12) ➜  watergenic-coding-test git:(github-wiki) ✗ python src/watergenic_coding_test/train_dynamic.py -i data/202502_data_train.csv -n 8 
+
+Loading data from 202502_data_train...
+✅ Data loaded successfully.
+
+Using local MLflow tracking...
+Start a local MLflow server with UI by running the command **mlflow ui** in your terminal
+🏃 View runs and 🧪 experiments at: http://localhost:5000
+
+Training model on 8 data points...
+✅ Model trained successfully.
+Saving model...
+✅ Model saved successfully.
+
+ ==================================================
+The mean absolute percentage error (MAPE) training error:
+Linear Regression on 8 data points: 0.15403 % (R2 =  0.9986)

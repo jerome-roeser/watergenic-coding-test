@@ -4,7 +4,8 @@ from click.testing import CliRunner
 
 from src.watergenic_coding_test.train import train_model, main
 
-
+# Copilot (Claude Sonnet 3.5) was used to generate the test cases below.
+# The code was reviewed, tested and modified as necessary.
 class TestTrainModel(unittest.TestCase):
     def setUp(self):
         # Setup code to create a sample DataFrame for testing

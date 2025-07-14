@@ -16,6 +16,15 @@ should setup an isolated virtual environement and install the required dependenc
 
 If you use a tool like `pyenv` to manage different Python versions, you can switch the current python of your shell and Poetry will use it to create the new environment.
 
+<details open>
+  <summary> Check here for links to install those tools </summary>
+
+[pyenv install](https://github.com/pyenv/pyenv?tab=readme-ov-file#installation)
+
+[poetry install](https://python-poetry.org/docs/#installing-with-pipx)
+
+</details>
+<br>
 For instance, if your project requires a newer Python than is available with your system, a standard workflow would be:
 
 ``` bash
