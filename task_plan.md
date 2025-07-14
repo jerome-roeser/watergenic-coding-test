@@ -13,8 +13,8 @@ the features and models used for training
 - [ ] Create first unit tests for validating input format
 - [ ] update/check requirements.txt after the code is functional
 - [ ] document the code with docstrings
-- [ ] create installation guide
-- [ ] create usage guide
+- [X] create installation guide
+- [X] create usage guide
 - [ ] create function reference
 - [ ] create AI report if necessary
 
@@ -25,4 +25,4 @@ the features and models used for training
 
 ### To Do
 - Implement mlflow feature for [production Databricks/AzureML tracking servers](https://mlflow.org/docs/latest/ml/getting-started/tracking-server-overview/#method-3-use-production-hosted-tracking-server)
-- Discuss with Mehdi about data input
+- Discuss with Mehdi about list data input and implement the corresponding feature
