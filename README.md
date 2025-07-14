@@ -30,7 +30,7 @@ It seems that the model  doesn't perform that well on the testing set.
     * the model is **not complex enough**: but adding the 2nd feature and testing other
 models didn't really change the performance
     * the **low number of training points** limits the ability to capture the variance of the target variable
-    * there is a data drift and the training and test datasets might have different distributions
+    * there is a **data drift** and the **training and test datasets might have different distributions**
 
 ✅ To prepare a better model and make better predicitions, a few approaches can be exploited
 * **Collect more data** and more features or do feature engineering
