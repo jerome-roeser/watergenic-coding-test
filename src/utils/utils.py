@@ -61,7 +61,9 @@ def load_data_from_file(file_path: Path) -> pd.DataFrame:
 
 #### INPUT VALIDATION ####
 
-# Generated with Copilot.
+# Copilot (Claude Sonnet 3.5) was used to generate the data validation cases below.
+# The code was reviewed, tested and modified as necessary.
+
 def validate_input_file(file_path: Path) -> Union[ValueError, True]:
     """
     Validate if the input file exists and is a CSV or JSON file.
@@ -84,7 +86,7 @@ def validate_input_file(file_path: Path) -> Union[ValueError, True]:
 
     return True
 
-# Genereated with Copilot.
+
 def validate_input_file_dynamic(file_path: Path) -> bool:
     """
     Validate if the input file exists and is a CSV or JSON file.
@@ -109,7 +111,7 @@ def validate_input_file_dynamic(file_path: Path) -> bool:
     return True
 
 
-# Generated with Copilot.
+
 def validate_input_list_dynamic(input_list: List) -> bool:
     """
     The list should contain 4 lists with the following data points
@@ -132,7 +134,7 @@ def validate_input_list_dynamic(input_list: List) -> bool:
 
     return True
 
-# Generated with Copilot. Checked, edited and validated.
+
 def validate_dataframe_format(df: pd.DataFrame) -> bool:
     """
     Validate if the DataFrame has the correct format.

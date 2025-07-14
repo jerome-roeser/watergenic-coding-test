@@ -86,3 +86,22 @@ python src/watergenic_coding_test/train_dynamic.py -i data/202502_data_train.jso
 
 python src/watergenic_coding_test/predict.py -i data/202302_data_test.csv
 ```
+# 3. Checking model performance with the MLFlow Tracking Server
+
+To use a locally hosted MLflow server to view the experiments stored in mlruns, do the following steps.
+
+### Start a Local MLflow Server
+If you don't have MLflow installed, please run the command below to install it:
+
+``` python
+pip install mlflow
+```
+
+The installation of MLflow includes the MLflow CLI tool, so you can start a local MLflow server with UI by running the command below in your terminal:
+
+``` python
+mlflow ui
+```
+
+### View Experiment on Your MLflow Server
+Now let's view your experiment on the local server. Open the URL in your browser, which is http://localhost:5000 in our case.

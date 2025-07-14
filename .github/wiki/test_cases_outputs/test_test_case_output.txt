@@ -1,0 +1,15 @@
+(watergenic-coding-test-py3.12) ➜  watergenic-coding-test git:(github-wiki) ✗ make predict
+
+Loading data from 202302_data_test...
+✅ Data loaded successfully.
+Using local MLflow tracking...
+Start a local MLflow server with UI by running the command **mlflow ui** in your terminal
+🏃 View runs and 🧪 experiments at: http://localhost:5000
+
+ ==================================================
+Predictions: [75.18531851 53.83436218 56.70769549 89.74592805 84.83879455 81.34867635
+ 58.84096063 48.8763749  81.34867635 61.72030449]
+
+ ==================================================
+The mean absolute percentage error (MAPE) prediction error
+=> 0.14251 % (R2 =  0.59855)

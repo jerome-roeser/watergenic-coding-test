@@ -6,7 +6,8 @@ from click.testing import CliRunner
 
 from src.watergenic_coding_test.predict import main, predict
 
-
+# Copilot (Claude Sonnet 3.5) was used to generate the test cases below.
+# The code was reviewed, tested and modified as necessary.
 class TestPredictValues(unittest.TestCase):
 
     def setUp(self):

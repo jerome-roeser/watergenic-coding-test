@@ -15,8 +15,8 @@ the features and models used for training
 - [X] document the code with docstrings
 - [X] create installation guide
 - [X] create usage guide
-- [ ] create function reference
-- [ ] create AI report if necessary
+- [X] create function reference
+- [X] create AI report if necessary
 
 
 ### Issues

@@ -4,6 +4,8 @@ from click.testing import CliRunner
 from src.watergenic_coding_test.train_dynamic import main
 
 
+# Copilot (Claude Sonnet 3.5) was used to generate the test cases below.
+# The code was reviewed, tested and modified as necessary.
 class TestTrainDynamicInput(unittest.TestCase):
 
     def setUp(self):
