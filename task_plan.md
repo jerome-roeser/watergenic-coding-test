@@ -25,4 +25,4 @@ the features and models used for training
 
 ### To Do
 - Implement mlflow feature for [production Databricks/AzureML tracking servers](https://mlflow.org/docs/latest/ml/getting-started/tracking-server-overview/#method-3-use-production-hosted-tracking-server)
-- Discuss with Mehdi about data input
+- Discuss with Mehdi about list data input and implement the corresponding feature
