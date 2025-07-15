@@ -45,7 +45,7 @@ You can also setup a separate pyenv local `pyenv` environment and use the `requi
 ``` bash
 pyenv install 3.12.4
 pyenv virtualenv 3.12.4 watergenics
-pyenv local watergenics  # Activate Python 3.12 for the current project
+pyenv local watergenics  
 pip install -r requirements.txt
 ```
 
