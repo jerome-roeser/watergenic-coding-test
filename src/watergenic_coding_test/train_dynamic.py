@@ -20,12 +20,10 @@ N_DATA_POINTS = config["n_data_points"]
 
 
 @click.command()
-
-
 @click.option(
     "--input_file",
     "-i",
-    type=click.Path(exists=True),
+    type=click.Path(),
     default=TRAIN_DATA_FILE,
     help="Path to the input data file (CSV or JSON).",
 )
@@ -35,10 +33,17 @@ N_DATA_POINTS = config["n_data_points"]
     type=int,
     help="Number of data points to sample for training.",
 )
-
+@click.option(
+    "--minimum_data_points",
+    "-m",
+    default=4,
+    type=int,
+    help="minimum of data points to allowed for training.",
+)
 def main(
     input_file: Union[Path, List[List]] = TRAIN_DATA_FILE,
     n_data_points: int = 5,
+    minimum_data_points: int = 4,
 ) -> None:
     """
     Main function to train the model with dynamic input.
@@ -69,6 +74,7 @@ def main(
 
     train_input = Path(input_file) if input_file else TRAIN_DATA_FILE
     n_train = n_data_points if n_data_points else N_DATA_POINTS
+    min_train = minimum_data_points if minimum_data_points else 4
 
     # Define / hardcode the column names in case of json or list input
     columns = ["time", "input_variable1", "input_variable2", "target_variable"]
@@ -93,8 +99,8 @@ def main(
         )
 
     # ensure that the model is trained with at least 4 data points
-    if len(train_df) < 4 or n_train < 4:
-        raise ValueError("You must provide at least 4 data points for training.")
+    if len(train_df) < min_train or n_train < min_train:
+        raise ValueError(f"You must provide at least {min_train} data points for training.")
     # ensure the required number of data points is not too high
     if len(train_df) < n_train:
         raise ValueError(
