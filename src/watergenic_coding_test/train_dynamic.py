@@ -20,6 +20,7 @@ N_DATA_POINTS = config["n_data_points"]
 
 
 @click.command()
+
 @click.option(
     "--input_file",
     "-i",
@@ -33,6 +34,7 @@ N_DATA_POINTS = config["n_data_points"]
     type=int,
     help="Number of data points to sample for training.",
 )
+
 def main(
     input_file: Union[Path, List[List]] = TRAIN_DATA_FILE,
     n_data_points: int = 5,
