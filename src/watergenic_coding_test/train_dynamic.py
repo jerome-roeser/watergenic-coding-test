@@ -21,6 +21,7 @@ N_DATA_POINTS = config["n_data_points"]
 
 @click.command()
 
+
 @click.option(
     "--input_file",
     "-i",

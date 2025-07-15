@@ -1,0 +1,30 @@
+artifact_path: file:///home/jerome-roeser/code/jerome-roeser/12-Case-Studies/watergenic-coding-test/mlruns/828855017991072322/models/m-630e8b1f42ca4c30940d5406b9dc48f7/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.4
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.0
+is_signature_from_type_hint: false
+mlflow_version: 3.1.1
+model_id: m-630e8b1f42ca4c30940d5406b9dc48f7
+model_size_bytes: 2171
+model_uuid: m-630e8b1f42ca4c30940d5406b9dc48f7
+prompts: null
+run_id: 154126527b614f199fb6fbc87b85aa8d
+signature:
+  inputs: '[{"type": "string", "name": "time", "required": true}, {"type": "double",
+    "name": "input_variable1", "required": true}, {"type": "double", "name": "input_variable2",
+    "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-07-15 06:52:12.512842'

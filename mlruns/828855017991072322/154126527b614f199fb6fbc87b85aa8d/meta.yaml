@@ -1,0 +1,14 @@
+artifact_uri: file:///home/jerome-roeser/code/jerome-roeser/12-Case-Studies/watergenic-coding-test/mlruns/828855017991072322/154126527b614f199fb6fbc87b85aa8d/artifacts
+end_time: 1752562336274
+entry_point_name: ''
+experiment_id: '828855017991072322'
+lifecycle_stage: active
+run_id: 154126527b614f199fb6fbc87b85aa8d
+run_name: chill-shad-51
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1752562332398
+status: 3
+tags: []
+user_id: jerome-roeser

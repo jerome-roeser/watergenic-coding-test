@@ -1,0 +1,14 @@
+artifact_uri: file:///home/jerome-roeser/code/jerome-roeser/12-Case-Studies/watergenic-coding-test/mlruns/828855017991072322/faed43a244b743e58eabb0e56bccd506/artifacts
+end_time: 1752562399705
+entry_point_name: ''
+experiment_id: '828855017991072322'
+lifecycle_stage: active
+run_id: faed43a244b743e58eabb0e56bccd506
+run_name: indecisive-lamb-668
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1752562396159
+status: 3
+tags: []
+user_id: jerome-roeser

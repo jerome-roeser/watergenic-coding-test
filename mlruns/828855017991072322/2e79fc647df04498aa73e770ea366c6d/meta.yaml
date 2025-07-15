@@ -1,0 +1,14 @@
+artifact_uri: file:///home/jerome-roeser/code/jerome-roeser/12-Case-Studies/watergenic-coding-test/mlruns/828855017991072322/2e79fc647df04498aa73e770ea366c6d/artifacts
+end_time: 1752562409302
+entry_point_name: ''
+experiment_id: '828855017991072322'
+lifecycle_stage: active
+run_id: 2e79fc647df04498aa73e770ea366c6d
+run_name: mercurial-grouse-220
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1752562409280
+status: 3
+tags: []
+user_id: jerome-roeser
