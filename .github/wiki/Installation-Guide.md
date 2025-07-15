@@ -4,7 +4,7 @@ The first step is to clone the public repository on your local machine in a
 working directory of your choice.
 In a terminal run the following commands
 ``` bash
-git clone https://github.com/jerome-roeser/watergenic-coding-test.git
+git clone https://github.com/jerome-roeser/watergenics-coding-test.git
 cd watergenics-coding-test
 ```
 
@@ -44,7 +44,8 @@ eval $(poetry env activate)
 You can also setup a separate pyenv local `pyenv` environment and use the `requirements.txt` file to install the dependencies with `pip install`
 ``` bash
 pyenv install 3.12.4
-pyenv local 3.12.4  # Activate Python 3.12 for the current project
+pyenv virtualenv 3.12.4 watergenics
+pyenv local watergenics  # Activate Python 3.12 for the current project
 pip install -r requirements.txt
 ```
 
