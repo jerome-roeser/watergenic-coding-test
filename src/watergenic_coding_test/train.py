@@ -14,23 +14,27 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_percentage_error, r2_score
 
 from src.watergenic_coding_test.params import LOCAL_DATA_PATH, LOCAL_MODELS_PATH
-from src.utils.utils import config, load_data_from_file, validate_input_file, validate_dataframe_format
+from src.utils.utils import (
+    config,
+    load_data_from_file,
+    validate_input_file,
+    validate_dataframe_format,
+)
 
 
 # Define the path to the training data file in a robust way
-TRAIN_DATA_FILE = Path(LOCAL_DATA_PATH).joinpath(config['files']['train'])
+TRAIN_DATA_FILE = Path(LOCAL_DATA_PATH).joinpath(config["files"]["train"])
 
 # MLflow configuration
-MLFLOW_EXPERIMENT_NAME = config['mlflow']['experiment_name']
-MLFLOW_URI = config['mlflow']['uri']
-MLFLOW_TRACKING_SERVER = config['mlflow']['tracking_server']
+MLFLOW_EXPERIMENT_NAME = config["mlflow"]["experiment_name"]
+MLFLOW_URI = config["mlflow"]["uri"]
+MLFLOW_TRACKING_SERVER = config["mlflow"]["tracking_server"]
 
 
 def train_model(
-    df: pd.DataFrame,
-    mlflow_tracking_server: bool = False
-    )-> Tuple[Pipeline, float, float]:
-    """ Train a machine learning model using the provided DataFrame.
+    df: pd.DataFrame, mlflow_tracking_server: bool = False
+) -> Tuple[Pipeline, float, float]:
+    """Train a machine learning model using the provided DataFrame.
 
     The function validates the DataFrame format, sets up MLflow for tracking,
     and trains a Linear Regression model.
@@ -66,35 +70,31 @@ def train_model(
     if mlflow_tracking_server:
         print("\nSetting up MLflow tracking server...")
         print(f"❗ Make sure the MLflow tracking server is running at {MLFLOW_URI} ❗")
-        print("You can start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
+        print(
+            "You can start a local MLflow server with UI by running the command **mlflow ui** in your terminal"
+        )
         mlflow.set_tracking_uri(MLFLOW_URI)
     else:
         print("\nUsing local MLflow tracking...")
-        print(f"Start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
+        print(
+            "Start a local MLflow server with UI by running the command **mlflow ui** in your terminal"
+        )
         print(f"🏃 View runs and 🧪 experiments at: {MLFLOW_URI}")
 
     # Enable autologging for scikit-learn
     mlflow.sklearn.autolog()
 
-
     ###### Model Training Pipeline ######
-    X_train = df.copy()
-    y_train = X_train.pop('target_variable')
+    X_train = df.copy().drop(columns="time")
+    y_train = X_train.pop("target_variable")
 
-    num_transformer = make_pipeline(
-        KNNImputer(),
-        MinMaxScaler()
-        )
+    num_transformer = make_pipeline(KNNImputer(), MinMaxScaler())
 
     num_prepocessor = make_column_transformer(
-        (num_transformer, ["input_variable1"]),
-        remainder="drop"
-        )
-
-    pipeline = make_pipeline(
-        num_prepocessor,
-        LinearRegression()
+        (num_transformer, ["input_variable1"]), remainder="drop"
     )
+
+    pipeline = make_pipeline(num_prepocessor, LinearRegression())
 
     ###### Training and saving the Model ######
     with mlflow.start_run():
@@ -108,33 +108,31 @@ def train_model(
         print("✅ Model trained successfully.")
 
         y_pred = pipeline.predict(X_train)
-        r2 = r2_score(df['target_variable'], y_pred)
-        mape = mean_absolute_percentage_error(df['target_variable'], y_pred)
+        r2 = r2_score(df["target_variable"], y_pred)
+        mape = mean_absolute_percentage_error(df["target_variable"], y_pred)
 
         # MAPE is not logged in autolog() mode, so we log it manually
         mlflow.log_metric("mape", mape)
         mlflow.log_metric("r2", r2)
 
-
     print("Saving model...")
-    try:
+    if not Path(LOCAL_MODELS_PATH).exists():
         Path(LOCAL_MODELS_PATH).mkdir(parents=False, exist_ok=True)
-    except Exception as e:
-        print(f"❗ Error creating model directory: {e}")
-        raise
 
-    with open(Path().joinpath(LOCAL_MODELS_PATH, 'model.pkl'), 'wb') as model_file:
+    with open(Path().joinpath(LOCAL_MODELS_PATH, "model.pkl"), "wb") as model_file:
         pickle.dump(pipeline, model_file)
     print("✅ Model saved successfully.")
     return pipeline, r2, mape
 
 
 @click.command()
-@click.option('--input_file', '-i',
-              type=click.Path(),
-              default=TRAIN_DATA_FILE,
-              help='Path to the input data file (CSV or JSON).'
-              )
+@click.option(
+    "--input_file",
+    "-i",
+    type=click.Path(),
+    default=TRAIN_DATA_FILE,
+    help="Path to the input data file (CSV or JSON).",
+)
 def main(input_file: Union[Path, str]):
     """
     Main function to train the model.
@@ -163,17 +161,14 @@ def main(input_file: Union[Path, str]):
     if validate_input_file(train_input):
         train_df = load_data_from_file(train_input)
 
-
     # train the model with a sample of 5 data points
     train_df = train_df.sample(5, replace=True)
     pipeline, r2, mape = train_model(
-        train_df,
-        mlflow_tracking_server=MLFLOW_TRACKING_SERVER
-        )
+        train_df, mlflow_tracking_server=MLFLOW_TRACKING_SERVER
+    )
     print("\n", "=" * 50)
     print("The mean absolute percentage error (MAPE) training error:")
     print(f"Linear Regression on 5 data points: {mape:.5g} % (R2 =  {r2:.5g})\n")
-
 
 
 if __name__ == "__main__":
