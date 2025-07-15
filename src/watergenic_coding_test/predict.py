@@ -7,10 +7,11 @@ import mlflow
 
 from pathlib import Path
 
+from sklearn.base import RegressorMixin, MetaEstimatorMixin
 from sklearn.metrics import mean_absolute_percentage_error, r2_score
 
 from src.watergenic_coding_test.params import LOCAL_DATA_PATH, LOCAL_MODELS_PATH
-from src.utils.utils import config, load_data_from_file, validate_pred_dataframe_format
+from src.utils.utils import config, load_data_from_file, validate_pred_dataframe_format, validate_input_file
 
 # We'll make predicitons fron the Test set loacted in the data folder
 PREDICT_DATA_FILE = Path(LOCAL_DATA_PATH).joinpath(config['files']['test'])
@@ -22,13 +23,19 @@ MLFLOW_TRACKING_SERVER = config['mlflow']['tracking_server']
 
 
 
-def predict(df, mlflow_tracking_server: bool = False) -> Union[pd.Series, float]:
+def predict(
+    model: Union[MetaEstimatorMixin, RegressorMixin],
+    df: pd.DataFrame,
+    mlflow_tracking_server: bool = False
+    ) -> Union[pd.Series, float]:
     """ Predict the target variable using a pre-trained model.
 
     The function validates the DataFrame format, sets up MLflow for tracking,
     and makes predictions using a pre-trained model.
     Parameters
     ----------
+    model : Union[Pipeline, LinearRegression]
+        Pre-trained model pipeline or a Regressor model.
     df : pd.DataFrame
         DataFrame containing the input data. It must have the columns:
         'input_variable1', and optionally 'target_variable'.
@@ -56,31 +63,28 @@ def predict(df, mlflow_tracking_server: bool = False) -> Union[pd.Series, float]
     mlflow.set_experiment(MLFLOW_EXPERIMENT_NAME)
 
     if mlflow_tracking_server:
-        print("Setting up MLflow tracking server...")
+        print("\nSetting up MLflow tracking server...")
         print(f"❗ Make sure the MLflow tracking server is running at {MLFLOW_URI} ❗")
         print("You can start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
         mlflow.set_tracking_uri(MLFLOW_URI)
     else:
-        print("Using local MLflow tracking...")
+        print("\nUsing local MLflow tracking...")
         print(f"Start a local MLflow server with UI by running the command **mlflow ui** in your terminal")
         print(f"🏃 View runs and 🧪 experiments at: {MLFLOW_URI}")
 
-    # Get the model and check if it exists
-    with open(Path(LOCAL_MODELS_PATH).joinpath('model.pkl'), 'rb') as model_file:
-        pipeline = load(model_file)
 
     try:
-        assert pipeline is not None, "Model pipeline is None. Please check the model file."
+        assert model is not None, "Model pipeline is None. Please check the model file."
     except AssertionError as e:
         raise ValueError("Model pipeline is None. Please check the model file.")
 
-    y_pred = pipeline.predict(df)
+    y_pred = model.predict(df)
 
     # If the target variable is present, we return the R2 and MAPE scores and log them to MLflow
     if 'target_variable' in df.columns:
        with mlflow.start_run():
         params = {
-            "context": "predict",
+            "context": "test",
         }
         mlflow.log_params(params)
 
@@ -119,11 +123,17 @@ def main(input_file: Union[Path, str]):
 
     train_input = Path(input_file) if input_file else PREDICT_DATA_FILE
 
-    pred_df = load_data_from_file(train_input)
+    if validate_input_file(train_input):
+        pred_df = load_data_from_file(train_input)
 
-    # Let's precit 10 data points only
+        # Get the model
+    with open(Path(LOCAL_MODELS_PATH).joinpath('model.pkl'), 'rb') as model_file:
+        pipeline = load(model_file)
+
+    # Let's predict 10 data points only
     if 'target_variable' in pred_df.columns:
         y_pred, r2, mape = predict(
+            pipeline,
             pred_df.sample(n=10, replace=True),
             mlflow_tracking_server=MLFLOW_TRACKING_SERVER
             )
@@ -134,6 +144,7 @@ def main(input_file: Union[Path, str]):
         print(f"=> {mape:.5g} % (R2 =  {r2:.5g})\n")
     else:
         y_pred = predict(
+            pipeline,
             pred_df.sample(n=10, replace=True),
             mlflow_tracking_server=MLFLOW_TRACKING_SERVER
             )

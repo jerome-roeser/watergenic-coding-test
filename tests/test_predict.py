@@ -1,9 +1,12 @@
 import unittest
 import numpy as np
 import pandas as pd
+from pickle import load
+from pathlib import Path
 from typing import Tuple
 from click.testing import CliRunner
 
+from src.watergenic_coding_test.params import LOCAL_MODELS_PATH
 from src.watergenic_coding_test.predict import main, predict
 
 # Copilot (Claude Sonnet 3.5) was used to generate the test cases below.
@@ -24,16 +27,20 @@ class TestPredictValues(unittest.TestCase):
             'target_variable': [10, 20, 30, 40, 50]
         })
 
+        with open(Path(LOCAL_MODELS_PATH).joinpath('model.pkl'), 'rb') as model_file:
+            pipeline = load(model_file)
+        self.model = pipeline
+
     def test_predict_values(self):
         # Test the predict function with the sample DataFrame
-        predictions = predict(self.pred_df, mlflow_tracking_server=False)
+        predictions = predict(self.model, self.pred_df, mlflow_tracking_server=False)
         self.assertIsInstance(predictions, np.ndarray)
         self.assertEqual(len(predictions), len(self.pred_df))
 
     def test_test_model(self):
         # TWhen a target variable is present, the predict function serves as
         # a test for the model, returning the R2 and MAPE scores.
-        predictions = predict(self.test_df, mlflow_tracking_server=False)
+        predictions = predict(self.model, self.test_df, mlflow_tracking_server=False)
         self.assertIsInstance(predictions, Tuple)
         y_pred, r2, mape = predictions
         self.assertIsInstance(y_pred, np.ndarray)
@@ -48,7 +55,9 @@ class TestPredictValues(unittest.TestCase):
             'input_variable2': [5, 4, 3, 2, 1],
         })
         with self.assertRaises(ValueError):
-            predict(invalid_df, mlflow_tracking_server=False)
+            predict(self.model, invalid_df, mlflow_tracking_server=False)
 
     def test_raise_error_when_model_is_None(self):
-        pass
+        model = None
+        with self.assertRaises(ValueError):
+            predict(model, self.pred_df, mlflow_tracking_server=False)

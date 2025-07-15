@@ -78,7 +78,7 @@ def train_model(
 
 
     ###### Model Training Pipeline ######
-    X_train = df.copy()
+    X_train = df.copy().drop(columns='time')
     y_train = X_train.pop('target_variable')
 
     num_transformer = make_pipeline(
@@ -110,6 +110,10 @@ def train_model(
         y_pred = pipeline.predict(X_train)
         r2 = r2_score(df['target_variable'], y_pred)
         mape = mean_absolute_percentage_error(df['target_variable'], y_pred)
+
+        # MAPE is not logged in autolog() mode, so we log it manually
+        mlflow.log_metric("mape", mape)
+        mlflow.log_metric("r2", r2)
 
 
     print("Saving model...")

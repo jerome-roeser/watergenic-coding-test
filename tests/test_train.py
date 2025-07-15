@@ -1,8 +1,10 @@
 import unittest
 import pandas as pd
 from click.testing import CliRunner
+import mlflow
 
 from src.watergenic_coding_test.train import train_model, main
+from src.utils.utils import config
 
 # Copilot (Claude Sonnet 3.5) was used to generate the test cases below.
 # The code was reviewed, tested and modified as necessary.
@@ -64,3 +66,19 @@ class TestFileInput(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.runner.invoke(main, ['--input_file', input_file],
                           catch_exceptions=False)
+
+class TestMlflow(unittest.TestCase):
+    def setUp(self):
+        # MLflow configuration
+        self.MLFLOW_EXPERIMENT_NAME = config['mlflow']['experiment_name']
+        self.MLFLOW_URI = config['mlflow']['uri']
+
+        # mlflow.set_tracking_uri(self.MLFLOW_URI)
+        self.mlflow_client = mlflow.tracking.MlflowClient()
+
+    def test_mlflow_experiment_exists(self):
+        # Test with MLflow tracking server enabled
+        experiment_id = self.mlflow_client.get_experiment_by_name(
+            self.MLFLOW_EXPERIMENT_NAME).experiment_id
+        self.assertIsNotNone(experiment_id,
+                "Experiment should exist")
