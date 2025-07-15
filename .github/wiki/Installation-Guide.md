@@ -44,7 +44,8 @@ eval $(poetry env activate)
 You can also setup a separate pyenv local `pyenv` environment and use the `requirements.txt` file to install the dependencies with `pip install`
 ``` bash
 pyenv install 3.12.4
-pyenv local 3.12.4  # Activate Python 3.12 for the current project
+pyenv virtualenv 3.12.4 watergenics
+pyenv local watergenics  # Activate Python 3.12 for the current project
 pip install -r requirements.txt
 ```
 
