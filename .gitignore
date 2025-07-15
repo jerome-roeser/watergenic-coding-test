@@ -1,6 +1,7 @@
 data/*.pdf
 models/*.pkl
 mlruns/
+tests/*.csv
 sandbox.ipynb
 
 # Byte-compiled / optimized / DLL files
