@@ -7,27 +7,31 @@ from typing import Tuple
 from click.testing import CliRunner
 
 from src.watergenic_coding_test.params import LOCAL_MODELS_PATH
-from src.watergenic_coding_test.predict import main, predict
+from src.watergenic_coding_test.predict import predict
+
 
 # Copilot (Claude Sonnet 3.5) was used to generate the test cases below.
 # The code was reviewed, tested and modified as necessary.
 class TestPredictValues(unittest.TestCase):
-
     def setUp(self):
         self.runner = CliRunner()
 
-        self.pred_df = pd.DataFrame({
-            'input_variable1': [1, 2, 3, 4, 5],
-            'input_variable2': [5, 4, 3, 2, 1],
-        })
+        self.pred_df = pd.DataFrame(
+            {
+                "input_variable1": [1, 2, 3, 4, 5],
+                "input_variable2": [5, 4, 3, 2, 1],
+            }
+        )
 
-        self.test_df = pd.DataFrame({
-            'input_variable1': [1, 2, 3, 4, 5],
-            'input_variable2': [5, 4, 3, 2, 1],
-            'target_variable': [10, 20, 30, 40, 50]
-        })
+        self.test_df = pd.DataFrame(
+            {
+                "input_variable1": [1, 2, 3, 4, 5],
+                "input_variable2": [5, 4, 3, 2, 1],
+                "target_variable": [10, 20, 30, 40, 50],
+            }
+        )
 
-        with open(Path(LOCAL_MODELS_PATH).joinpath('model.pkl'), 'rb') as model_file:
+        with open(Path(LOCAL_MODELS_PATH).joinpath("model.pkl"), "rb") as model_file:
             pipeline = load(model_file)
         self.model = pipeline
 
@@ -50,10 +54,12 @@ class TestPredictValues(unittest.TestCase):
 
     def test_invalid_dataframe(self):
         # Test with an invalid DataFrame (missing input variables)
-        invalid_df = pd.DataFrame({
-            'input_variable1': ['1', 2, 3, 4, 5],
-            'input_variable2': [5, 4, 3, 2, 1],
-        })
+        invalid_df = pd.DataFrame(
+            {
+                "input_variable1": ["1", 2, 3, 4, 5],
+                "input_variable2": [5, 4, 3, 2, 1],
+            }
+        )
         with self.assertRaises(ValueError):
             predict(self.model, invalid_df, mlflow_tracking_server=False)
 
