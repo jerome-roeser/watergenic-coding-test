@@ -1,0 +1,10 @@
+artifact_location: file:///home/jerome-roeser/code/jerome-roeser/12-Case-Studies/watergenic-coding-test/mlruns/828855017991072322/models/m-630e8b1f42ca4c30940d5406b9dc48f7/artifacts
+creation_timestamp: 1752562332472
+experiment_id: '828855017991072322'
+last_updated_timestamp: 1752562336220
+model_id: m-630e8b1f42ca4c30940d5406b9dc48f7
+model_type: null
+name: model
+source_run_id: 154126527b614f199fb6fbc87b85aa8d
+status: 2
+status_message: null

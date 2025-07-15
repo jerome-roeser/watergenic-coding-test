@@ -1,0 +1,9 @@
+digest: d9182127
+name: dataset
+profile: '{"num_rows": 5, "num_elements": 15}'
+schema: '{"mlflow_colspec": [{"type": "string", "name": "time", "required": true},
+  {"type": "double", "name": "input_variable1", "required": true}, {"type": "double",
+  "name": "input_variable2", "required": true}]}'
+source: '{"tags": {"mlflow.user": "jerome-roeser", "mlflow.source.name": "src/watergenic_coding_test/train.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "c0541128fbc38e1c175d352b7ce07628d33d2fb6"}}'
+source_type: code

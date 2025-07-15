@@ -1,0 +1,1 @@
+[('knnimputer', KNNImputer()), ('minmaxscaler', MinMaxScaler())]

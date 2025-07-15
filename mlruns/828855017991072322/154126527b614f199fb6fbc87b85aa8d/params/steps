@@ -1,0 +1,5 @@
+[('columntransformer', ColumnTransformer(transformers=[('pipeline',
+                                 Pipeline(steps=[('knnimputer', KNNImputer()),
+                                                 ('minmaxscaler',
+                                                  MinMaxScaler())]),
+                                 ['input_variable1'])])), ('linearregression', LinearRegression())]
