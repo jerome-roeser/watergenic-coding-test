@@ -4,7 +4,7 @@ The first step is to clone the public repository on your local machine in a
 working directory of your choice.
 In a terminal run the following commands
 ``` bash
-git clone https://github.com/jerome-roeser/watergenic-coding-test.git
+git clone https://github.com/jerome-roeser/watergenics-coding-test.git
 cd watergenics-coding-test
 ```
 

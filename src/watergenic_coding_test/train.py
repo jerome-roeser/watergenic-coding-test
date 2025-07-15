@@ -111,6 +111,10 @@ def train_model(
         r2 = r2_score(df['target_variable'], y_pred)
         mape = mean_absolute_percentage_error(df['target_variable'], y_pred)
 
+        # MAPE is not logged in autolog() mode, so we log it manually
+        mlflow.log_metric("mape", mape)
+        mlflow.log_metric("r2", r2)
+
 
     print("Saving model...")
     try:

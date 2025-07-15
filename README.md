@@ -6,7 +6,7 @@ This project evaluates your **Python and ML skills**, your ability to **plan and
 You will implement a small ML project using `scikit-learn`, `MLflow`, and `unit testing`— while demonstrating strong skills in problem solving, progress documentation, and optionally using AI tools responsibly.
 
 
-## 💬 My approach in 2 words
+## 💬 My approach
 Before coding the project / package, I performed exploratory data analysis (EDA) in order
 to get a hand on the data and decide which ML model and features to use to predict the target.
 
